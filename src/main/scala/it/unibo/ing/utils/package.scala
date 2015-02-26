@@ -41,16 +41,23 @@ package object utils {
 
   implicit class RichURL(u : java.net.URL){
     import java.net.URL
-    def `/` (s : String) = new URL(combine(u.toString, s))
+    def / (s : String) = new URL(combine(u.toString, s))
     def / (u2 : URL) = new URL(combine(u.toString, u2.toString))
   }
 
   def combine (s1 :String, s2 :String) = {
-    val ss = s1.takeRight(1) + s2(0)
-    ss.count(_ == '/') match{
-      case 0 => s1 + "/" + s2
-      case 1 => s1 + s2
-      case 2 => s1 + s2.substring(1)
+    require(s1.nonEmpty)
+    if (s2 isEmpty){
+      if (s1.takeRight(1) == '/') s1
+      else s1 + '/'
+    }
+    else{
+      val ss = s1.takeRight(1) + s2(0)
+      ss.count(_ == '/') match{
+        case 0 => s1 + "/" + s2
+        case 1 => s1 + s2
+        case 2 => s1 + s2.substring(1)
+      }
     }
   }
 
