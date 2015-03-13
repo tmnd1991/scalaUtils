@@ -22,4 +22,6 @@ object URLUtils {
       URLUtils(u.toString.split(":"+p).mkString("")).getOrElse(u)
     }
   }
+
+  implicit def URL2str(u : URL) : String = u.toString()
 }
