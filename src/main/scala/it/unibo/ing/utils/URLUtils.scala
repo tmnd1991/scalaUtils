@@ -12,4 +12,14 @@ object URLUtils {
   catch{
     case e : Throwable => None
   }
+
+  def removePort(u : URL) : URL = {
+    val p = u.getPort
+    if (p == -1){
+      u
+    }
+    else{
+      URLUtils(u.toString.split(":"+p).mkString("")).getOrElse(u)
+    }
+  }
 }
