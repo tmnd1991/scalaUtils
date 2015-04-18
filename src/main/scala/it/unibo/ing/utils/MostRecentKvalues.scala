@@ -34,7 +34,8 @@ class MostRecentKvalues[T](val k: Int = 150) {
     }
   }
   def isLatest(d: Date) : Boolean = synchronized{
-    d after _innerMap.keys.toList.sorted.last
+    if (_innerMap isEmpty) true
+    else d after _innerMap.keys.toList.sorted.last
   }
 
   def contains(d: Date) : Boolean = synchronized{
