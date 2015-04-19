@@ -41,4 +41,8 @@ class MostRecentKvalues[T](val k: Int = 150) {
   def contains(d: Date) : Boolean = synchronized{
     _innerMap contains d
   }
+
+  def between(s: Date, e: Date) : Iterable[T] = synchronized{
+    _innerMap.keys.filter(x => (x after s) && (x before e)).map(_innerMap(_))
+  }
 }
