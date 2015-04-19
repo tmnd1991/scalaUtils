@@ -45,4 +45,6 @@ class MostRecentKvalues[T](val k: Int = 150) {
   def between(s: Date, e: Date) : Iterable[T] = synchronized{
     _innerMap.keys.filter(x => (x after s) && (x before e)).map(_innerMap(_))
   }
+
+  def keys : Seq[Date] = _innerMap.keys.toSeq
 }
