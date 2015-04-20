@@ -28,9 +28,11 @@ class MostRecentKvalues[T](val k: Int = 150) {
   private def removeOldest() : Unit = {
     synchronized{
       val toRemove = _count - k
-      if (toRemove > 0){
-        _innerMap.keys.toList.sorted.take(toRemove).foreach(_innerMap -= _)
-      }
+      if (toRemove > 0)
+        for (x <- _innerMap.keys.toList.sorted.take(toRemove)){
+          _innerMap -= x
+          _count -= toRemove
+        }
     }
   }
   def isLatest(d: Date) : Boolean = synchronized{
