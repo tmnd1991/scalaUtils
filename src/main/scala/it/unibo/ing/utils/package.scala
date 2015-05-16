@@ -6,6 +6,7 @@ package it.unibo.ing
  */
 package object utils {
   implicit def StringToRichString(s : String) = new RichString(s)
+
   class RichString(s : String) {
     def mySubstring(beginIndex : Int, endIndex : Int) : String = {
       val rightEndIndex = if (endIndex < 0) s.length+endIndex
@@ -14,7 +15,6 @@ package object utils {
     }
     def `/` (x : String) = combine(s.toString, x)
   }
-
 
   implicit class RichCollection[A, Repr](xs: scala.collection.IterableLike[A, Repr]){
     def distinctBy[B, That](f: A => B)(implicit cbf: scala.collection.generic.CanBuildFrom[Repr, A, That]) = {
@@ -30,6 +30,19 @@ package object utils {
         }
       }
       builder.result
+    }
+    def mapFold[B](z: B)(op: (B, A) => B): B = mapFoldLeft[B](z)(op)
+    def mapFoldLeft[B](z: B)(op: (B, A) => B): B = {
+      var result = z
+      xs foreach (x => result = op(result, x))
+      result
+    }
+    def mapFoldRight[B](z: B)(op: (B, A) => B): B = {
+      var result = z
+      var elems: List[A] = Nil
+      xs foreach (elems ::= _)
+      elems foreach (x => result = op(result, x))
+      result
     }
   }
 
