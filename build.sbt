@@ -4,7 +4,7 @@ version := "1.0"
 
 organization := "it.unibo.ing"
 
-scalaVersion := "2.11.4"
+crossScalaVersions := Seq("2.10", "2.11")
 
 //TESTING
-libraryDependencies += "org.scalatest" % "scalatest_2.11" % "2.2.2"
+libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.4" % "test"
